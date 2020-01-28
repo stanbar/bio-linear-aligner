@@ -15,7 +15,7 @@ show all options
 python aligner.py -h
 ```
 
-run sample
+run local alignment on sample `input.fasta` sequences
 ```sh
 python aligner.py local
 ```
