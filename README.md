@@ -1,9 +1,11 @@
 # Bio Linear Aligner
+
 Linear Alignment using BioPython
 
 ## How to use
 
 setup venv and install dependencies
+
 ```sh
 python -m venv venv
 . venv/bin/activate
@@ -11,6 +13,7 @@ pip install -r requirements.txt
 ```
 
 show all options
+
 ```sh
 python aligner.py -h
 ```
@@ -139,6 +142,13 @@ or you can use one of predefined substitution matrices
 ]
 ```
 python aligner.py local sample_sequences/two_sequences.fasta --matrix blosum62
+```
+
+or even specify your own matrice
+
+```
+python aligner.py local sample_sequences/zad_1_u.txt sample_sequences/zad_1_w.txt --matrix custom_matrice.txt
+
 ```
 
 

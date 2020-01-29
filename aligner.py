@@ -41,28 +41,27 @@ from Bio.SubsMat import MatrixInfo
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
-    print(arguments)
-
     input_files = arguments['INPUT']
-    print(input_files)
-
     aligner = Align.PairwiseAligner()
     if arguments['local']:
         aligner.mode = 'local'
     else:
         aligner.mode = 'global'
 
-
     if arguments['--matrix'] in MatrixInfo.available_matrices:
-        print('using substitution_matrices')
         matrice = arguments['--matrix']
-        aligner.substitution_matrix = substitution_matrices.load(matrice) 
+        loaded_matrix = substitution_matrices.load(matrice.upper())
+        aligner.substitution_matrix =  loaded_matrix
+    elif arguments['--matrix']:
+        matrix_file = arguments['--matrix']
+        with open(matrix_file, 'r') as matrix_file:
+            matrice_dict = substitution_matrices.read(matrix_file)
+            aligner.substitution_matrix = matrice_dict
     else:
         aligner.match_score = int(arguments['--matchscore'])
         aligner.mismatch_score = int(arguments['--mismatchscore'])
         aligner.open_gap_score = int(arguments['--opengapscore'])
         aligner.extend_gap_score = int(arguments['--extendgapscore'])
-
 
     out_file = arguments['-o']
     input_file_format = arguments['--informat']
@@ -79,9 +78,6 @@ if __name__ == '__main__':
     else:
         raise(RuntimeError('Please provide exactly 1 or 2 sequences in each file'))
 
-    print(first.seq)
-    print(second.seq)
-    print(aligner)
     score = aligner.score(first.seq, second.seq)
     print(f'Maximum score: {score}')
     alignments = aligner.align(first.seq, second.seq)
@@ -91,3 +87,4 @@ if __name__ == '__main__':
             print(f'Score: {align.score}', end="\n\n")
             print(align.format(), end="", file=out_file)
             print(f'Score: {align.score}', end="\n\n", file=out_file)
+

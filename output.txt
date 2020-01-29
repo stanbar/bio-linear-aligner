@@ -1,5 +1,5 @@
-MKLKKTIGAMALATLFATMGASAVEKTISVTASVDPTVDLLQSDGSALPNSVALTYSPAV                   
-                                              ||-|-|-|--|||                    
-              MLKIKYLLIGLSLSAMSSYSLAAAGPTLTKELAL-N-V-L--SPAALDATWAPQDNLTLSNTGVS
-Score: 11.0
+-ACTA
+-..|-
+TGTT-
+Score: 9.0
 
