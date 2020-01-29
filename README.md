@@ -7,7 +7,7 @@ setup venv and install dependencies
 ```sh
 python -m venv venv
 . venv/bin/activate
-pip insall -r requirements.txt
+pip install -r requirements.txt
 ```
 
 show all options
@@ -15,9 +15,81 @@ show all options
 python aligner.py -h
 ```
 
-run local alignment on sample `input.fasta` sequences
+run local alignment on sample `sample_sequences/two_sequences.fasta` sequences
 ```sh
-python aligner.py local
+python aligner.py local sample_sequences/two_sequences.fasta
+```
+
+output
+```
+Maximum score: 11.0
+MKLKKTIGAMALATLFATMGASAVEKTISVTASVDPTVDLLQSDGSALPNSVALTYSPAV                   
+                                              ||-|-|-|--|||                    
+              MLKIKYLLIGLSLSAMSSYSLAAAGPTLTKELAL-N-V-L--SPAALDATWAPQDNLTLSNTGVS
+Score: 11.0
+```
+
+you can also provie 2 input files
+```sh
+python aligner.py global sample_sequences/dna-1.txt sample_sequences/dna-2.txt
+```
+
+```output
+Maximum score: 5.0
+tcgattata----gag
+---||-||.----|||
+---at-atcccccgag
+Score: 5.0
+
+tcgattata----gag
+---|-|||.----|||
+---a-tatcccccgag
+Score: 5.0
+
+tcgattat-a---gag
+---||-||-.---|||
+---at-atcccccgag
+Score: 5.0
+
+tcgattat-a---gag
+---|-|||-.---|||
+---a-tatcccccgag
+Score: 5.0
+
+tcgattat--a--gag
+---||-||--.--|||
+---at-atcccccgag
+Score: 5.0
+
+tcgattat--a--gag
+---|-|||--.--|||
+---a-tatcccccgag
+Score: 5.0
+
+tcgattat---a-gag
+---||-||---.-|||
+---at-atcccccgag
+Score: 5.0
+
+tcgattat---a-gag
+---|-|||---.-|||
+---a-tatcccccgag
+Score: 5.0
+
+tcgattat----agag
+---||-||----.|||
+---at-atcccccgag
+Score: 5.0
+
+tcgattat----agag
+---|-|||----.|||
+---a-tatcccccgag
+Score: 5.0
+```
+
+default output file is `output.txt` but you can specifiy it with -o OUT_FILE, for example
+```sh
+python aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt
 ```
 
 preview
