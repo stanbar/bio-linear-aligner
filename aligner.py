@@ -2,39 +2,42 @@
 Usage:
   aligner.py (local|global) INPUT ...
   [-o OUT_FILE] 
-  [--matchscore match_score] 
-  [--mismatchscore mismatch_score] 
-  [--opengapscore open_gap_score] 
-  [--extendgapscore extend_gap_score] 
+  [--matchscore MATCH_SCORE] 
+  [--mismatchscore MISMATCH_SCORE] 
+  [--opengapscore OPEN_GAP_SCORE] 
+  [--extendgapscore EXTEND_GAP_SCORE] 
   [--informat FORMAT] 
+  [--matrix MATRIX]
   aligner.py (-h | --help)
 
 Examples:
   aligner.py local sample_sequences/two_sequences.fasta
   aligner.py global sample_sequences/dna-1.txt sample_sequences/dna-2.txt
   aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt
+  aligner.py local sample_sequences/two_sequences.fasta --matrix blosum62
 
 Options:
   -h --help  Show this screen.
-  -o OUT_FILE  Output file [default: ./output.txt]
-  --matchscore  match score [default: 2]
-  --mismatchscore  mismatch score [default: -1]
-  --opengapscore  open gap score [default: -1]
-  --extendgapscore  extend gap score [default: -1]
-  --informat FORMAT input format [default: fasta]
+  -o OUT_FILE  output file [default: ./output.txt]
+  --matchscore MATCH_SCORE  match score [default: 2]
+  --mismatchscore MISMATCH_SCORE  mismatch score [default: -1]
+  --opengapscore OPEN_GAP_SCORE  open gap score [default: -1]
+  --extendgapscore EXTEND_GAP_SCORE  extend gap score [default: -1]
+  --informat FORMAT  input format [default: fasta]
+  --matrix MATRIX  substitution matrice
 """
 
 from docopt import docopt
 from Bio.SeqIO import parse, read
 from Bio.Data import IUPACData
 from Bio import SeqIO, AlignIO, pairwise2, Align
+from Bio.Align import substitution_matrices
 from Bio.Alphabet import generic_dna, generic_protein, generic_rna, IUPAC
 from Bio.SeqRecord import SeqRecord
 from Bio.Seq import Seq, transcribe, back_transcribe
 from Bio.SeqUtils import GC
 from Bio.Data import CodonTable
-from Bio.SubsMat import MatrixInfo as matlist
-matrix = matlist.blosum62
+from Bio.SubsMat import MatrixInfo
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
@@ -49,13 +52,20 @@ if __name__ == '__main__':
     else:
         aligner.mode = 'global'
 
-    aligner.match_score = arguments['match_score']
-    aligner.mismatch_score = arguments['mismatch_score']
-    aligner.open_gap_score = arguments['open_gap_score']
-    aligner.extend_gap_score = arguments['extend_gap_score']
+
+    if arguments['--matrix'] in MatrixInfo.available_matrices:
+        print('using substitution_matrices')
+        matrice = arguments['--matrix']
+        aligner.substitution_matrix = substitution_matrices.load(matrice) 
+    else:
+        aligner.match_score = int(arguments['--matchscore'])
+        aligner.mismatch_score = int(arguments['--mismatchscore'])
+        aligner.open_gap_score = int(arguments['--opengapscore'])
+        aligner.extend_gap_score = int(arguments['--extendgapscore'])
+
 
     out_file = arguments['-o']
-    input_file_format = arguments['FORMAT']
+    input_file_format = arguments['--informat']
 
     if len(input_files) == 2:
         sequences = [read(input_file, input_file_format)

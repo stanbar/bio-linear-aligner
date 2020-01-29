@@ -19,26 +19,29 @@ python aligner.py -h
 Usage:
   aligner.py (local|global) INPUT ...
   [-o OUT_FILE] 
-  [--matchscore match_score] 
-  [--mismatchscore mismatch_score] 
-  [--opengapscore open_gap_score] 
-  [--extendgapscore extend_gap_score] 
+  [--matchscore MATCH_SCORE] 
+  [--mismatchscore MISMATCH_SCORE] 
+  [--opengapscore OPEN_GAP_SCORE] 
+  [--extendgapscore EXTEND_GAP_SCORE] 
   [--informat FORMAT] 
+  [--matrix MATRIX]
   aligner.py (-h | --help)
 
 Examples:
   aligner.py local sample_sequences/two_sequences.fasta
   aligner.py global sample_sequences/dna-1.txt sample_sequences/dna-2.txt
   aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt
+  aligner.py local sample_sequences/two_sequences.fasta --matrix blosum62
 
 Options:
   -h --help  Show this screen.
-  -o OUT_FILE  Output file [default: ./output.txt]
-  --matchscore  match score [default: 2]
-  --mismatchscore  mismatch score [default: -1]
-  --opengapscore  open gap score [default: -1]
-  --extendgapscore  extend gap score [default: -1]
-  --format  input format [default: fasta]
+  -o OUT_FILE  output file [default: ./output.txt]
+  --matchscore MATCH_SCORE  match score [default: 2]
+  --mismatchscore MISMATCH_SCORE  mismatch score [default: -1]
+  --opengapscore OPEN_GAP_SCORE  open gap score [default: -1]
+  --extendgapscore EXTEND_GAP_SCORE  extend gap score [default: -1]
+  --informat FORMAT  input format [default: fasta]
+  --matrix MATRIX  substitution matrice
   ```
 
 
@@ -120,6 +123,22 @@ you can customize the scoring and penality with
 --mismatchscore  mismatch score [default: -1]
 --opengapscore  open gap score [default: -1]
 --extendgapscore  extend gap score [default: -1]
+```
+
+or you can use one of predefined substitution matrices
+["benner6", "benner22", "benner74", "blosum100",
+  "blosum30", "blosum35", "blosum40", "blosum45",
+  "blosum50", "blosum55", "blosum60", "blosum62",
+  "blosum65", "blosum70", "blosum75", "blosum80",
+  "blosum85", "blosum90", "blosum95", "feng",
+  "fitch", "genetic", "gonnet", "grant",
+  "ident", "johnson", "levin", "mclach",
+  "miyata", "nwsgappep", "pam120", "pam180",
+  "pam250", "pam30", "pam300", "pam60",
+  "pam90", "rao", "risler", "structure",
+]
+```
+python aligner.py local sample_sequences/two_sequences.fasta --matrix blosum62
 ```
 
 
