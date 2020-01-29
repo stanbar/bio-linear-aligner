@@ -9,13 +9,18 @@ Usage:
   [--informat FORMAT] 
   aligner.py (-h | --help)
 
+Examples:
+  aligner.py local sample_sequences/two_sequences.fasta
+  aligner.py global sample_sequences/dna-1.txt sample_sequences/dna-2.txt
+  aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt
+
 Options:
   -h --help  Show this screen.
   -o OUT_FILE  Output file [default: ./output.txt]
-  --matchscore  Default 2
-  --mismatchscore  Default -1
-  --opengapscore  Default -1
-  --extendgapscore  Default -1
+  --matchscore  match score [default: 2]
+  --mismatchscore  mismatch score [default: -1]
+  --opengapscore  open gap score [default: -1]
+  --extendgapscore  extend gap score [default: -1]
   --format  input format [default: fasta]
 """
 
@@ -36,18 +41,7 @@ if __name__ == '__main__':
     print(arguments)
 
     input_files = arguments['INPUT']
-
     print(input_files)
-
-    if not arguments['-o']:
-        out_file = "output.txt"
-    else:
-        out_file = arguments['-o']
-
-    if not arguments['FORMAT']:
-        input_file_format = "fasta"
-    else:
-        input_file_format = arguments['FORMAT']
 
     aligner = Align.PairwiseAligner()
     if arguments['local']:
@@ -55,25 +49,13 @@ if __name__ == '__main__':
     else:
         aligner.mode = 'global'
 
-    if arguments['match_score']:
-        aligner.match_score = arguments['match_score']
-    else:
-        aligner.match_score = 2
+    aligner.match_score = arguments['match_score']
+    aligner.mismatch_score = arguments['mismatch_score']
+    aligner.open_gap_score = arguments['open_gap_score']
+    aligner.extend_gap_score = arguments['extend_gap_score']
 
-    if arguments['mismatch_score']:
-        aligner.mismatch_score = arguments['mismatch_score']
-    else:
-        aligner.mismatch_score = -1
-
-    if arguments['open_gap_score']:
-        aligner.open_gap_score = arguments['open_gap_score']
-    else:
-        aligner.open_gap_score = -1
-
-    if arguments['extend_gap_score']:
-        aligner.extend_gap_score = arguments['extend_gap_score']
-    else:
-        aligner.extend_gap_score = -1
+    out_file = arguments['-o']
+    input_file_format = arguments['FORMAT']
 
     if len(input_files) == 2:
         sequences = [read(input_file, input_file_format)

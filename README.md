@@ -15,6 +15,33 @@ show all options
 python aligner.py -h
 ```
 
+```
+Usage:
+  aligner.py (local|global) INPUT ...
+  [-o OUT_FILE] 
+  [--matchscore match_score] 
+  [--mismatchscore mismatch_score] 
+  [--opengapscore open_gap_score] 
+  [--extendgapscore extend_gap_score] 
+  [--informat FORMAT] 
+  aligner.py (-h | --help)
+
+Examples:
+  aligner.py local sample_sequences/two_sequences.fasta
+  aligner.py global sample_sequences/dna-1.txt sample_sequences/dna-2.txt
+  aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt
+
+Options:
+  -h --help  Show this screen.
+  -o OUT_FILE  Output file [default: ./output.txt]
+  --matchscore  match score [default: 2]
+  --mismatchscore  mismatch score [default: -1]
+  --opengapscore  open gap score [default: -1]
+  --extendgapscore  extend gap score [default: -1]
+  --format  input format [default: fasta]
+  ```
+
+
 run local alignment on sample `sample_sequences/two_sequences.fasta` sequences
 ```sh
 python aligner.py local sample_sequences/two_sequences.fasta
