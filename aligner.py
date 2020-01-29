@@ -62,17 +62,15 @@ if __name__ == '__main__':
                      for input_file in input_files]
         first = sequences[0]
         second = sequences[1]
-        print(first.seq)
-        print(second.seq)
     elif len(input_files) == 1:
         sequences = parse(input_files[0], input_file_format)
         first = next(sequences)
         second = next(sequences)
-        print(first.seq)
-        print(second.seq)
     else:
         raise(RuntimeError('Please provide exactly 1 or 2 sequences in each file'))
 
+    print(first.seq)
+    print(second.seq)
     print(aligner)
     score = aligner.score(first.seq, second.seq)
     print(f'Maximum score: {score}')
