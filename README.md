@@ -114,6 +114,15 @@ tcgattat----agag
 Score: 5.0
 ```
 
+you can customize the scoring and penality with 
+```
+--matchscore  match score [default: 2]
+--mismatchscore  mismatch score [default: -1]
+--opengapscore  open gap score [default: -1]
+--extendgapscore  extend gap score [default: -1]
+```
+
+
 default output file is `output.txt` but you can specifiy it with -o OUT_FILE, for example
 ```sh
 python aligner.py local sample_sequences/two_sequences.fasta -o alignments.txt

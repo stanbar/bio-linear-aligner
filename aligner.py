@@ -21,7 +21,7 @@ Options:
   --mismatchscore  mismatch score [default: -1]
   --opengapscore  open gap score [default: -1]
   --extendgapscore  extend gap score [default: -1]
-  --format  input format [default: fasta]
+  --informat FORMAT input format [default: fasta]
 """
 
 from docopt import docopt
